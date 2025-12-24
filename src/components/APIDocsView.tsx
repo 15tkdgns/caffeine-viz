@@ -48,12 +48,37 @@ const methodColors: { [key: string]: string } = {
     DELETE: '#ef4444',
 };
 
+import { Download } from 'lucide-react';
+import { downloadFile, generateMarkdownDocs } from '../utils/newExporters';
+
 export default function APIDocsView() {
     return (
         <div style={{ padding: '24px', background: '#0f172a', height: '100%', overflowY: 'auto', color: '#e2e8f0', boxSizing: 'border-box' }}>
-            <h2 style={{ marginBottom: '24px', fontSize: '1.25rem', fontWeight: 600 }}>
-                API Documentation
-            </h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                <h2 style={{ fontSize: '1.25rem', fontWeight: 600, margin: 0 }}>
+                    API Documentation
+                </h2>
+                <button
+                    onClick={() => {
+                        const md = generateMarkdownDocs(apiDocs);
+                        downloadFile('caffeine_api_docs.md', md, 'text/markdown');
+                    }}
+                    style={{
+                        padding: '8px 16px',
+                        background: '#334155',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        fontSize: '0.85rem'
+                    }}
+                >
+                    <Download size={14} /> Export Markdown
+                </button>
+            </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {Object.entries(apiDocs).map(([key, section]) => (

@@ -42,15 +42,40 @@ const featureMatrix = [
     { feature: '사용자 관리', user: false, admin: true, api: 'CRUD' },
 ];
 
+import { Download } from 'lucide-react';
+import { downloadFile } from '../utils/newExporters';
+
 export default function TechRadarView() {
     return (
         <div style={{ padding: '24px', background: '#f8fafc', minHeight: '100%', overflow: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                 {/* Tech Radar */}
                 <div style={{ background: '#fff', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
-                    <h3 style={{ margin: '0 0 20px 0', fontSize: '1.1rem', fontWeight: 600, color: '#1e293b' }}>
-                        🎯 Tech Radar
-                    </h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 600, color: '#1e293b' }}>
+                            Tech Radar
+                        </h3>
+                        <button
+                            onClick={() => {
+                                const data = { techRadar: techRadarData, timeline: timelineData, matrix: featureMatrix };
+                                downloadFile('caffeine_tech_radar.json', JSON.stringify(data, null, 2), 'application/json');
+                            }}
+                            style={{
+                                padding: '6px 12px',
+                                background: '#f1f5f9',
+                                color: '#475569',
+                                border: '1px solid #e2e8f0',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                fontSize: '0.75rem'
+                            }}
+                        >
+                            <Download size={12} /> Export JSON
+                        </button>
+                    </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                         {Object.entries(techRadarData).map(([ring, techs]) => (
                             <div key={ring} style={{ padding: '12px', borderRadius: '8px', background: getRingColor(ring) }}>

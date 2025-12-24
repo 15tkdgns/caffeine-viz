@@ -7,6 +7,9 @@ const diagrams = [
     { id: 'data_flow', title: '데이터 흐름', file: '/diagrams/caffeine_data_flow.png' },
 ];
 
+import { Download } from 'lucide-react';
+import { downloadFile } from '../utils/newExporters';
+
 export default function DiagramsView() {
     const [selected, setSelected] = useState(diagrams[0].id);
     const selectedDiagram = diagrams.find(d => d.id === selected);
@@ -14,9 +17,38 @@ export default function DiagramsView() {
     return (
         <div style={{ padding: '24px', background: '#f8fafc', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <div style={{ marginBottom: '16px' }}>
-                <h2 style={{ margin: '0 0 16px 0', fontSize: '1.25rem', fontWeight: 600, color: '#1e293b' }}>
-                    Python Diagrams (Cloud Architecture)
-                </h2>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <h2 style={{ margin: 0, fontSize: '1.25rem', fontWeight: 600, color: '#1e293b' }}>
+                        Python Diagrams (Cloud Architecture)
+                    </h2>
+                    <button
+                        onClick={() => {
+                            const pythonCode = `# Caffeine Architecture Diagram Generator
+from diagrams import Diagram, Cluster
+from diagrams.aws.compute import EC2
+
+with Diagram("Caffeine Architecture", show=False):
+    EC2("Web Server")
+# See scripts/generate_diagrams.py for full code
+`;
+                            downloadFile('generate_diagrams.py', pythonCode, 'text/x-python');
+                        }}
+                        style={{
+                            padding: '6px 12px',
+                            background: '#eff6ff',
+                            color: '#3b82f6',
+                            border: '1px solid #dbeafe',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            fontSize: '0.85rem'
+                        }}
+                    >
+                        <Download size={14} /> Download Script
+                    </button>
+                </div>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {diagrams.map((d) => (
                         <button

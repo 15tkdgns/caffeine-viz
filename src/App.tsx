@@ -13,13 +13,14 @@ import {
 } from '@xyflow/react';
 import type { Connection } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Monitor, Server, Database, Brain, Activity, Globe, Shield, Cloud, Lock, User, CreditCard, MessageSquare, Settings, Smartphone, Layout, Cpu, FileText, Zap, Network, Key, UserCheck, Box, GitBranch, Container, Layers, LayoutGrid } from 'lucide-react';
+import { Monitor, Server, Database, Brain, Activity, Globe, Shield, Cloud, Lock, User, CreditCard, MessageSquare, Settings, Smartphone, Layout, Cpu, FileText, Zap, Network, Key, UserCheck, Box, GitBranch, Container, Layers, LayoutGrid, Download } from 'lucide-react';
 import './index.css';
 import ChartDBView from './components/ChartDBView';
 import TechRadarView from './components/TechRadarView';
 import APIDocsView from './components/APIDocsView';
 import DiagramsView from './components/DiagramsView';
 import { getLayoutedElements, type LayoutDirection } from './utils/layoutUtils';
+import { downloadFile } from './utils/newExporters';
 
 // Custom Node Component
 const CustomNode = ({ data }: { data: any }) => {
@@ -379,6 +380,32 @@ function App() {
         >
           <LayoutGrid size={14} /> LR
         </button>
+
+        {/* Export Button (Flow Only) */}
+        {!isSpecialView && (
+          <>
+            <div style={{ width: '1px', height: '24px', background: '#e2e8f0', margin: '0 8px' }} />
+            <button
+              onClick={() => {
+                const flowData = { nodes, edges };
+                downloadFile(`caffeine_flow_${currentView}.json`, JSON.stringify(flowData, null, 2), 'application/json');
+              }}
+              style={{
+                padding: '6px 12px',
+                borderRadius: '6px',
+                border: '1px solid #e2e8f0',
+                background: '#fff',
+                cursor: 'pointer',
+                fontSize: '0.85rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
+              }}
+            >
+              <Download size={14} /> Export JSON
+            </button>
+          </>
+        )}
       </div>
 
       {/* Content Area */}
