@@ -47,7 +47,7 @@ const nodeTypes = { custom: CustomNode };
 const overallNodes = [
   { id: 'user-app', type: 'custom', position: { x: 100, y: 0 }, data: { label: 'User App', sub: '(React Native/Expo)', port: '8081', layer: 'client', icon: Monitor } },
   { id: 'admin-app', type: 'custom', position: { x: 350, y: 0 }, data: { label: 'Admin App', sub: '(Next.js/TS)', port: '3001', layer: 'client', icon: Globe } },
-  { id: 'nginx', type: 'custom', position: { x: 225, y: 150 }, data: { label: 'Nginx', sub: 'Reverse Proxy', port: '80', layer: 'gateway', icon: Shield } },
+  { id: 'alb', type: 'custom', position: { x: 225, y: 150 }, data: { label: 'Application Load Balancer', sub: 'AWS ALB', port: '80/443', layer: 'gateway', icon: Network } },
   { id: 'fastapi', type: 'custom', position: { x: 225, y: 300 }, data: { label: 'FastAPI Server', sub: '(Python 3.10)', port: '8001', layer: 'backend', icon: Server } },
   { id: 'ml-next', type: 'custom', position: { x: 0, y: 500 }, data: { label: 'ML Next', sub: '(XGBoost 73.47%)', port: '9001', layer: 'ml', icon: Activity } },
   { id: 'ml-fraud', type: 'custom', position: { x: 150, y: 500 }, data: { label: 'ML Fraud', sub: '(Anomaly Detection)', port: '9002', layer: 'ml', icon: Activity } },
@@ -56,9 +56,9 @@ const overallNodes = [
   { id: 'postgres', type: 'custom', position: { x: 225, y: 650 }, data: { label: 'PostgreSQL', sub: 'AWS RDS', port: '5432', layer: 'database', icon: Database } },
 ];
 const overallEdges = [
-  { id: 'e1-2', source: 'user-app', target: 'nginx', type: 'smoothstep' },
-  { id: 'e2-2', source: 'admin-app', target: 'nginx', type: 'smoothstep' },
-  { id: 'e3', source: 'nginx', target: 'fastapi', type: 'smoothstep' },
+  { id: 'e1-2', source: 'user-app', target: 'alb', type: 'smoothstep' },
+  { id: 'e2-2', source: 'admin-app', target: 'alb', type: 'smoothstep' },
+  { id: 'e3', source: 'alb', target: 'fastapi', type: 'smoothstep' },
   { id: 'e4', source: 'fastapi', target: 'ml-next', type: 'smoothstep' },
   { id: 'e5', source: 'fastapi', target: 'ml-fraud', type: 'smoothstep' },
   { id: 'e6', source: 'fastapi', target: 'llm-cat', type: 'smoothstep' },
@@ -74,7 +74,7 @@ const techStackNodes = [
   { id: 'database', type: 'custom', position: { x: 100, y: 500 }, data: { label: 'Database', sub: 'PostgreSQL, AWS RDS', layer: 'database', icon: Database } },
   { id: 'ml', type: 'custom', position: { x: 500, y: 500 }, data: { label: 'ML/AI', sub: 'XGBoost, scikit-learn, Anomaly Detection', layer: 'ml', icon: Brain } },
   { id: 'llm', type: 'custom', position: { x: 300, y: 500 }, data: { label: 'LLM', sub: 'Google Gemini API, gemini-2.0-flash', layer: 'llm', icon: MessageSquare } },
-  { id: 'devops', type: 'custom', position: { x: 300, y: 100 }, data: { label: 'DevOps', sub: 'Docker, Nginx, AWS ECS', layer: 'gateway', icon: Container } },
+  { id: 'devops', type: 'custom', position: { x: 300, y: 100 }, data: { label: 'DevOps', sub: 'Docker, ALB, AWS ECS', layer: 'gateway', icon: Container } },
 ];
 const techStackEdges = [
   { id: 'te1', source: 'frontend', target: 'root', type: 'smoothstep' },

@@ -12,7 +12,7 @@ from diagrams.onprem.client import Users
 from diagrams.onprem.compute import Server
 from diagrams.onprem.container import Docker
 from diagrams.onprem.database import PostgreSQL
-from diagrams.onprem.network import Nginx
+from diagrams.aws.network import ALB
 from diagrams.onprem.mlops import Mlflow
 from diagrams.programming.framework import FastAPI, React
 from diagrams.saas.chat import Slack
@@ -33,7 +33,7 @@ with Diagram("Caffeine Architecture", filename=f"{OUTPUT_DIR}/caffeine_architect
         admin_app = React("Admin App\n(Next.js)")
     
     with Cluster("Gateway"):
-        nginx = Nginx("Nginx\nReverse Proxy")
+        alb = ALB("Application Load Balancer\nAWS ALB")
     
     with Cluster("Backend"):
         api = FastAPI("FastAPI\nPython 3.10")
@@ -48,9 +48,9 @@ with Diagram("Caffeine Architecture", filename=f"{OUTPUT_DIR}/caffeine_architect
     with Cluster("Database"):
         db = PostgreSQL("PostgreSQL\nAWS RDS")
     
-    users >> user_app >> nginx
-    users >> admin_app >> nginx
-    nginx >> api
+    users >> user_app >> alb
+    users >> admin_app >> alb
+    alb >> api
     api >> ml_next
     api >> ml_fraud
     api >> llm

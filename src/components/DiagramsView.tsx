@@ -25,10 +25,11 @@ export default function DiagramsView() {
                         onClick={() => {
                             const pythonCode = `# Caffeine Architecture Diagram Generator
 from diagrams import Diagram, Cluster
+from diagrams.aws.network import ALB
 from diagrams.aws.compute import EC2
 
 with Diagram("Caffeine Architecture", show=False):
-    EC2("Web Server")
+    ALB("Load Balancer") >> EC2("Web Server")
 # See scripts/generate_diagrams.py for full code
 `;
                             downloadFile('generate_diagrams.py', pythonCode, 'text/x-python');
