@@ -98,9 +98,9 @@ const dbSchema: { tables: Table[]; relationships: Relationship[] } = {
 
 export default function ChartDBView() {
     return (
-        <div style={{ padding: '24px', background: '#0f172a', minHeight: '100%', overflow: 'auto' }}>
+        <div style={{ padding: '24px', background: '#0f172a', height: '100%', overflowY: 'auto', color: '#e2e8f0', boxSizing: 'border-box' }}>
             <h2 style={{ color: '#f8fafc', marginBottom: '24px', fontSize: '1.25rem', fontWeight: 600 }}>
-                🗄️ Database Schema (ChartDB Style)
+                Database Schema (ChartDB Style)
             </h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
                 {dbSchema.tables.map((table) => (
@@ -140,10 +140,10 @@ export default function ChartDBView() {
                                     }}
                                 >
                                     {/* Key indicator */}
-                                    <span style={{ width: '24px', fontSize: '0.75rem' }}>
-                                        {col.primary_key && '🔑'}
-                                        {col.foreign_key && '🔗'}
-                                        {col.unique && '⭐'}
+                                    <span style={{ width: '24px', fontSize: '0.75rem', fontWeight: 700, color: '#fcd34d' }}>
+                                        {col.primary_key && 'PK'}
+                                        {col.foreign_key && 'FK'}
+                                        {col.unique && 'UQ'}
                                     </span>
                                     {/* Column name */}
                                     <span style={{ flex: 1, color: '#e2e8f0', fontSize: '0.85rem' }}>
@@ -163,7 +163,7 @@ export default function ChartDBView() {
             {/* Relationships */}
             <div style={{ marginTop: '32px' }}>
                 <h3 style={{ color: '#94a3b8', marginBottom: '16px', fontSize: '1rem' }}>
-                    🔗 Relationships
+                    Relationships
                 </h3>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                     {dbSchema.relationships.map((rel, idx) => (

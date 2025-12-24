@@ -15,7 +15,7 @@ export default function DiagramsView() {
         <div style={{ padding: '24px', background: '#f8fafc', height: '100%', display: 'flex', flexDirection: 'column' }}>
             <div style={{ marginBottom: '16px' }}>
                 <h2 style={{ margin: '0 0 16px 0', fontSize: '1.25rem', fontWeight: 600, color: '#1e293b' }}>
-                    📐 Python Diagrams (Cloud Architecture)
+                    Python Diagrams (Cloud Architecture)
                 </h2>
                 <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                     {diagrams.map((d) => (
@@ -53,7 +53,7 @@ export default function DiagramsView() {
                     <img
                         src={selectedDiagram.file}
                         alt={selectedDiagram.title}
-                        style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
+                        style={{ width: 'auto', height: 'auto', maxHeight: 'none', maxWidth: 'none', transform: 'scale(1.2)', transformOrigin: 'top left' }}
                     />
                 )}
             </div>

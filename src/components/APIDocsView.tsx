@@ -1,7 +1,7 @@
 // API Documentation Explorer
 const apiDocs = {
     auth: {
-        title: '🔐 Authentication',
+        title: 'Authentication',
         endpoints: [
             { method: 'POST', path: '/api/auth/login', desc: '사용자 로그인', body: '{ email, password }', response: '{ token, user }' },
             { method: 'POST', path: '/api/auth/register', desc: '회원가입', body: '{ email, name, password }', response: '{ user }' },
@@ -9,7 +9,7 @@ const apiDocs = {
         ],
     },
     transactions: {
-        title: '💳 Transactions',
+        title: 'Transactions',
         endpoints: [
             { method: 'GET', path: '/api/transactions', desc: '거래 내역 조회', body: '-', response: '{ items[], total }' },
             { method: 'POST', path: '/api/transactions', desc: '거래 등록', body: '{ amount, description, category }', response: '{ transaction }' },
@@ -18,7 +18,7 @@ const apiDocs = {
         ],
     },
     analysis: {
-        title: '📊 Analysis',
+        title: 'Analysis',
         endpoints: [
             { method: 'GET', path: '/api/analysis/full', desc: '전체 분석 리포트', body: '-', response: '{ summary, charts, tips }' },
             { method: 'GET', path: '/api/analysis/categories', desc: '카테고리별 통계', body: '-', response: '{ categories[] }' },
@@ -26,14 +26,14 @@ const apiDocs = {
         ],
     },
     ml: {
-        title: '🤖 ML Services',
+        title: 'ML Services',
         endpoints: [
             { method: 'POST', path: '/ml/predict', desc: '카테고리 예측', body: '{ description, amount }', response: '{ category, probability }' },
             { method: 'POST', path: '/ml/predict-next', desc: '다음 소비 예측', body: '{ user_id }', response: '{ predictions[] }' },
         ],
     },
     chatbot: {
-        title: '💬 Chatbot',
+        title: 'Chatbot',
         endpoints: [
             { method: 'POST', path: '/api/chatbot/chat', desc: 'AI 대화', body: '{ message }', response: '{ response }' },
             { method: 'GET', path: '/api/chatbot/history', desc: '대화 기록', body: '-', response: '{ messages[] }' },
@@ -50,9 +50,9 @@ const methodColors: { [key: string]: string } = {
 
 export default function APIDocsView() {
     return (
-        <div style={{ padding: '24px', background: '#0f172a', minHeight: '100%', overflow: 'auto', color: '#e2e8f0' }}>
+        <div style={{ padding: '24px', background: '#0f172a', height: '100%', overflowY: 'auto', color: '#e2e8f0', boxSizing: 'border-box' }}>
             <h2 style={{ marginBottom: '24px', fontSize: '1.25rem', fontWeight: 600 }}>
-                📚 API Documentation
+                API Documentation
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>

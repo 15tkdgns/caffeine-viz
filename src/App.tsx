@@ -1,4 +1,4 @@
-import { useCallback, useState, lazy, Suspense } from 'react';
+import { useCallback, useState } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -13,18 +13,13 @@ import {
 } from '@xyflow/react';
 import type { Connection } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Monitor, Server, Database, Brain, Activity, Globe, Shield, Cloud, Lock, User, CreditCard, MessageSquare, Settings, Smartphone, Layout, Cpu, FileText, Zap, Network, Key, UserCheck, Box, GitBranch, Container, Layers, Download, LayoutGrid } from 'lucide-react';
+import { Monitor, Server, Database, Brain, Activity, Globe, Shield, Cloud, Lock, User, CreditCard, MessageSquare, Settings, Smartphone, Layout, Cpu, FileText, Zap, Network, Key, UserCheck, Box, GitBranch, Container, Layers, LayoutGrid } from 'lucide-react';
 import './index.css';
-import DataCharts from './components/DataCharts';
 import ChartDBView from './components/ChartDBView';
 import TechRadarView from './components/TechRadarView';
 import APIDocsView from './components/APIDocsView';
 import DiagramsView from './components/DiagramsView';
-import { exportToSupabase, exportToFlowiseAI } from './utils/exporters';
 import { getLayoutedElements, type LayoutDirection } from './utils/layoutUtils';
-
-// Lazy load heavy components
-const WhiteboardView = lazy(() => import('./components/WhiteboardView'));
 
 // Custom Node Component
 const CustomNode = ({ data }: { data: any }) => {
@@ -223,7 +218,7 @@ const diagrams: { [key: string]: { nodes: any[], edges: any[], label: string } }
 };
 
 // Special views (non-React Flow)
-const specialViews = ['charts', 'chartdb', 'whiteboard', 'techradar', 'apidocs', 'diagrams'];
+const specialViews = ['chartdb', 'techradar', 'apidocs', 'diagrams'];
 
 function App() {
   const [currentView, setCurrentView] = useState('overall');
@@ -287,20 +282,6 @@ function App() {
         {/* Additional Tools */}
         <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Tools:</span>
         <button
-          onClick={() => handleViewChange('charts')}
-          style={{
-            padding: '6px 12px',
-            borderRadius: '6px',
-            border: currentView === 'charts' ? '2px solid #22c55e' : '1px solid #e2e8f0',
-            background: currentView === 'charts' ? '#f0fdf4' : '#fff',
-            cursor: 'pointer',
-            fontWeight: currentView === 'charts' ? 600 : 400,
-            fontSize: '0.85rem',
-          }}
-        >
-          📊 D3/Recharts
-        </button>
-        <button
           onClick={() => handleViewChange('chartdb')}
           style={{
             padding: '6px 12px',
@@ -312,21 +293,7 @@ function App() {
             fontSize: '0.85rem',
           }}
         >
-          🗄️ ChartDB
-        </button>
-        <button
-          onClick={() => handleViewChange('whiteboard')}
-          style={{
-            padding: '6px 12px',
-            borderRadius: '6px',
-            border: currentView === 'whiteboard' ? '2px solid #f59e0b' : '1px solid #e2e8f0',
-            background: currentView === 'whiteboard' ? '#fffbeb' : '#fff',
-            cursor: 'pointer',
-            fontWeight: currentView === 'whiteboard' ? 600 : 400,
-            fontSize: '0.85rem',
-          }}
-        >
-          ✏️ Whiteboard
+          ChartDB
         </button>
         <button
           onClick={() => handleViewChange('techradar')}
@@ -340,7 +307,7 @@ function App() {
             fontSize: '0.85rem',
           }}
         >
-          🎯 Tech Radar
+          Tech Radar
         </button>
         <button
           onClick={() => handleViewChange('apidocs')}
@@ -354,7 +321,7 @@ function App() {
             fontSize: '0.85rem',
           }}
         >
-          📚 API Docs
+          API Docs
         </button>
         <button
           onClick={() => handleViewChange('diagrams')}
@@ -368,45 +335,7 @@ function App() {
             fontSize: '0.85rem',
           }}
         >
-          📐 Diagrams
-        </button>
-
-        {/* Divider */}
-        <div style={{ width: '1px', height: '24px', background: '#e2e8f0', margin: '0 8px' }} />
-
-        {/* Export Buttons */}
-        <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Export:</span>
-        <button
-          onClick={exportToSupabase}
-          style={{
-            padding: '6px 12px',
-            borderRadius: '6px',
-            border: '1px solid #e2e8f0',
-            background: '#fff',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}
-        >
-          <Download size={14} /> Supabase
-        </button>
-        <button
-          onClick={exportToFlowiseAI}
-          style={{
-            padding: '6px 12px',
-            borderRadius: '6px',
-            border: '1px solid #e2e8f0',
-            background: '#fff',
-            cursor: 'pointer',
-            fontSize: '0.85rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '4px',
-          }}
-        >
-          <Download size={14} /> FlowiseAI
+          Diagrams
         </button>
 
         {/* Divider */}
@@ -430,7 +359,7 @@ function App() {
             opacity: isSpecialView ? 0.5 : 1,
           }}
         >
-          <LayoutGrid size={14} /> 上↓下
+          <LayoutGrid size={14} /> TB
         </button>
         <button
           onClick={() => onLayout('LR')}
@@ -448,19 +377,13 @@ function App() {
             opacity: isSpecialView ? 0.5 : 1,
           }}
         >
-          <LayoutGrid size={14} /> 左→右
+          <LayoutGrid size={14} /> LR
         </button>
       </div>
 
       {/* Content Area */}
       <div style={{ flex: 1, overflow: 'hidden' }}>
-        {currentView === 'charts' && <DataCharts />}
         {currentView === 'chartdb' && <ChartDBView />}
-        {currentView === 'whiteboard' && (
-          <Suspense fallback={<div style={{ padding: 24 }}>Loading Whiteboard...</div>}>
-            <WhiteboardView />
-          </Suspense>
-        )}
         {currentView === 'techradar' && <TechRadarView />}
         {currentView === 'apidocs' && <APIDocsView />}
         {currentView === 'diagrams' && <DiagramsView />}
