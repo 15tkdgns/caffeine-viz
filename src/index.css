@@ -57,47 +57,55 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  color: #1e293b;
 }
 
 .custom-node .node-sub {
   font-size: 0.75rem;
-  color: #64748b;
+  color: #1e293b;
   line-height: 1.2;
+  font-weight: 500;
 }
 
 .custom-node .node-port {
   font-size: 0.7rem;
-  color: #94a3b8;
+  color: #1e293b;
   margin-top: 4px;
 }
 
-/* Layer-specific colors (Pastels) */
+/* Layer-specific colors (Enhanced for readability) */
 .node-client {
-  background-color: #e0f2fe;
-  border-color: #7dd3fc;
+  background-color: #fef3c7;
+  border-color: #f59e0b;
+  border-width: 2px;
 }
 
 .node-gateway {
-  background-color: #f1f5f9;
-  border-color: #cbd5e1;
+  background-color: #dbeafe;
+  border-color: #3b82f6;
+  border-width: 2px;
 }
 
 .node-backend {
-  background-color: #f0fdf4;
-  border-color: #86efac;
+  background-color: #fee2e2;
+  border-color: #ef4444;
+  border-width: 2px;
 }
 
 .node-ml {
-  background-color: #fff7ed;
-  border-color: #fdba74;
+  background-color: #d1fae5;
+  border-color: #10b981;
+  border-width: 2px;
 }
 
 .node-llm {
-  background-color: #faf5ff;
-  border-color: #d8b4fe;
+  background-color: #ede9fe;
+  border-color: #8b5cf6;
+  border-width: 2px;
 }
 
 .node-database {
-  background-color: #fef2f2;
-  border-color: #fca5a5;
+  background-color: #e0e7ff;
+  border-color: #6366f1;
+  border-width: 2px;
 }

@@ -19,6 +19,12 @@ import ChartDBView from './components/ChartDBView';
 import TechRadarView from './components/TechRadarView';
 import APIDocsView from './components/APIDocsView';
 import DiagramsView from './components/DiagramsView';
+import CloudArchitectureView from './components/CloudArchitectureView';
+import SecurityArchView from './components/SecurityArchView';
+import DataPipelineView from './components/DataPipelineView';
+import MLPipelineView from './components/MLPipelineView';
+import LLMArchView from './components/LLMArchView';
+import NavFeaturesView from './components/NavFeaturesView';
 import { getLayoutedElements, type LayoutDirection } from './utils/layoutUtils';
 import { downloadFile } from './utils/newExporters';
 
@@ -45,25 +51,27 @@ const nodeTypes = { custom: CustomNode };
 
 // 1. Overall Architecture
 const overallNodes = [
-  { id: 'user-app', type: 'custom', position: { x: 100, y: 0 }, data: { label: 'User App', sub: '(React Native/Expo)', port: '8081', layer: 'client', icon: Monitor } },
-  { id: 'admin-app', type: 'custom', position: { x: 350, y: 0 }, data: { label: 'Admin App', sub: '(Next.js/TS)', port: '3001', layer: 'client', icon: Globe } },
-  { id: 'alb', type: 'custom', position: { x: 225, y: 150 }, data: { label: 'Application Load Balancer', sub: 'AWS ALB', port: '80/443', layer: 'gateway', icon: Network } },
-  { id: 'fastapi', type: 'custom', position: { x: 225, y: 300 }, data: { label: 'FastAPI Server', sub: '(Python 3.10)', port: '8001', layer: 'backend', icon: Server } },
-  { id: 'ml-next', type: 'custom', position: { x: 0, y: 500 }, data: { label: 'ML Next', sub: '(XGBoost 73.47%)', port: '9001', layer: 'ml', icon: Activity } },
-  { id: 'ml-fraud', type: 'custom', position: { x: 150, y: 500 }, data: { label: 'ML Fraud', sub: '(Anomaly Detection)', port: '9002', layer: 'ml', icon: Activity } },
-  { id: 'llm-cat', type: 'custom', position: { x: 300, y: 500 }, data: { label: 'LLM Category', port: '9100', layer: 'llm', icon: Brain } },
-  { id: 'llm-analysis', type: 'custom', position: { x: 450, y: 500 }, data: { label: 'LLM Analysis', sub: '(Gemini 2.0)', port: '9102', layer: 'llm', icon: Brain } },
-  { id: 'postgres', type: 'custom', position: { x: 225, y: 650 }, data: { label: 'PostgreSQL', sub: 'AWS RDS', port: '5432', layer: 'database', icon: Database } },
+  { id: 'user-app', type: 'custom', position: { x: 100, y: 0 }, data: { label: 'Mobile App', sub: 'React Native + Expo', layer: 'client', icon: Smartphone } },
+  { id: 'admin-app', type: 'custom', position: { x: 350, y: 0 }, data: { label: 'Web App', sub: 'Next.js + TypeScript', layer: 'client', icon: Monitor } },
+  { id: 'alb', type: 'custom', position: { x: 225, y: 150 }, data: { label: 'AWS ALB', sub: 'Load Balancer + WAF', layer: 'gateway', icon: Shield } },
+  { id: 'fastapi', type: 'custom', position: { x: 225, y: 300 }, data: { label: 'FastAPI', sub: 'Python 3.10 + Pydantic', layer: 'backend', icon: Server } },
+  { id: 'ml-next', type: 'custom', position: { x: 0, y: 500 }, data: { label: 'XGBoost', sub: 'Next Prediction (73.47%)', layer: 'ml', icon: Brain } },
+  { id: 'ml-fraud', type: 'custom', position: { x: 175, y: 500 }, data: { label: 'scikit-learn', sub: 'Anomaly Detection', layer: 'ml', icon: Activity } },
+  { id: 'llm-gemini', type: 'custom', position: { x: 350, y: 500 }, data: { label: 'Gemini', sub: 'Google AI (gemini-pro)', layer: 'llm', icon: Brain } },
+  { id: 'llm-langchain', type: 'custom', position: { x: 500, y: 500 }, data: { label: 'LangChain', sub: 'LLM Framework', layer: 'llm', icon: MessageSquare } },
+  { id: 'postgres', type: 'custom', position: { x: 150, y: 650 }, data: { label: 'AWS RDS', sub: 'PostgreSQL', layer: 'database', icon: Database } },
+  { id: 'sqlalchemy', type: 'custom', position: { x: 350, y: 650 }, data: { label: 'SQLAlchemy', sub: 'ORM', layer: 'database', icon: Database } },
 ];
 const overallEdges = [
-  { id: 'e1-2', source: 'user-app', target: 'alb', type: 'smoothstep' },
-  { id: 'e2-2', source: 'admin-app', target: 'alb', type: 'smoothstep' },
-  { id: 'e3', source: 'alb', target: 'fastapi', type: 'smoothstep' },
+  { id: 'e1-2', source: 'user-app', target: 'alb', type: 'smoothstep', animated: true },
+  { id: 'e2-2', source: 'admin-app', target: 'alb', type: 'smoothstep', animated: true },
+  { id: 'e3', source: 'alb', target: 'fastapi', type: 'smoothstep', animated: true },
   { id: 'e4', source: 'fastapi', target: 'ml-next', type: 'smoothstep' },
   { id: 'e5', source: 'fastapi', target: 'ml-fraud', type: 'smoothstep' },
-  { id: 'e6', source: 'fastapi', target: 'llm-cat', type: 'smoothstep' },
-  { id: 'e7', source: 'fastapi', target: 'llm-analysis', type: 'smoothstep' },
+  { id: 'e6', source: 'fastapi', target: 'llm-gemini', type: 'smoothstep' },
+  { id: 'e7', source: 'fastapi', target: 'llm-langchain', type: 'smoothstep' },
   { id: 'e8', source: 'fastapi', target: 'postgres', type: 'smoothstep' },
+  { id: 'e9', source: 'fastapi', target: 'sqlalchemy', type: 'smoothstep' },
 ];
 
 // 2. Tech Stack (Mindmap style - edges flow inward to root)
@@ -209,7 +217,6 @@ const securityEdges = [
 // Diagram selector
 const diagrams: { [key: string]: { nodes: any[], edges: any[], label: string } } = {
   overall: { nodes: overallNodes, edges: overallEdges, label: '전체 구성도' },
-  techstack: { nodes: techStackNodes, edges: techStackEdges, label: '기술 스택' },
   erd: { nodes: erdNodes, edges: erdEdges, label: 'DB 스키마' },
   api: { nodes: apiNodes, edges: apiEdges, label: 'API 엔드포인트' },
   ml: { nodes: mlNodes, edges: mlEdges, label: 'ML 파이프라인' },
@@ -219,7 +226,7 @@ const diagrams: { [key: string]: { nodes: any[], edges: any[], label: string } }
 };
 
 // Special views (non-React Flow)
-const specialViews = ['chartdb', 'techradar', 'apidocs', 'diagrams'];
+const specialViews = ['chartdb', 'techradar', 'apidocs', 'diagrams', 'cloudarch', 'securityarch', 'datapipeline', 'mlpipeline', 'llmarch', 'navfeatures'];
 
 function App() {
   const [currentView, setCurrentView] = useState('overall');
@@ -338,6 +345,90 @@ function App() {
         >
           Diagrams
         </button>
+        <button
+          onClick={() => handleViewChange('cloudarch')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'cloudarch' ? '2px solid #f59e0b' : '1px solid #e2e8f0',
+            background: currentView === 'cloudarch' ? '#fffbeb' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'cloudarch' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          Cloud Arch
+        </button>
+        <button
+          onClick={() => handleViewChange('securityarch')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'securityarch' ? '2px solid #dc2626' : '1px solid #e2e8f0',
+            background: currentView === 'securityarch' ? '#fef2f2' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'securityarch' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          Security
+        </button>
+        <button
+          onClick={() => handleViewChange('datapipeline')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'datapipeline' ? '2px solid #059669' : '1px solid #e2e8f0',
+            background: currentView === 'datapipeline' ? '#ecfdf5' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'datapipeline' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          Data Pipeline
+        </button>
+        <button
+          onClick={() => handleViewChange('mlpipeline')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'mlpipeline' ? '2px solid #047857' : '1px solid #e2e8f0',
+            background: currentView === 'mlpipeline' ? '#ecfdf5' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'mlpipeline' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          ML Pipeline
+        </button>
+        <button
+          onClick={() => handleViewChange('llmarch')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'llmarch' ? '2px solid #7c3aed' : '1px solid #e2e8f0',
+            background: currentView === 'llmarch' ? '#f5f3ff' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'llmarch' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          LLM
+        </button>
+        <button
+          onClick={() => handleViewChange('navfeatures')}
+          style={{
+            padding: '6px 12px',
+            borderRadius: '6px',
+            border: currentView === 'navfeatures' ? '2px solid #ec4899' : '1px solid #e2e8f0',
+            background: currentView === 'navfeatures' ? '#fdf2f8' : '#fff',
+            cursor: 'pointer',
+            fontWeight: currentView === 'navfeatures' ? 600 : 400,
+            fontSize: '0.85rem',
+          }}
+        >
+          Nav Features
+        </button>
 
         {/* Divider */}
         <div style={{ width: '1px', height: '24px', background: '#e2e8f0', margin: '0 8px' }} />
@@ -414,6 +505,12 @@ function App() {
         {currentView === 'techradar' && <TechRadarView />}
         {currentView === 'apidocs' && <APIDocsView />}
         {currentView === 'diagrams' && <DiagramsView />}
+        {currentView === 'cloudarch' && <CloudArchitectureView />}
+        {currentView === 'securityarch' && <SecurityArchView />}
+        {currentView === 'datapipeline' && <DataPipelineView />}
+        {currentView === 'mlpipeline' && <MLPipelineView />}
+        {currentView === 'llmarch' && <LLMArchView />}
+        {currentView === 'navfeatures' && <NavFeaturesView />}
         {!isSpecialView && (
           <ReactFlow
             nodes={nodes}

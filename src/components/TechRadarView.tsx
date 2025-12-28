@@ -47,7 +47,7 @@ import { downloadFile } from '../utils/newExporters';
 
 export default function TechRadarView() {
     return (
-        <div style={{ padding: '24px', background: '#f8fafc', minHeight: '100%', overflow: 'auto' }}>
+        <div style={{ padding: '24px', background: '#f8fafc', height: '100%', overflow: 'auto' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                 {/* Tech Radar */}
                 <div style={{ background: '#fff', borderRadius: '16px', padding: '20px', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}>
